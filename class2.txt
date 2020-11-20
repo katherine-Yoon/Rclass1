@@ -1,0 +1,339 @@
+> # 벡터 응용 예제
+> 
+> # 1 백터 데이터 생성
+> data <- c(1:5) # 1부터 5까지
+> data
+[1] 1 2 3 4 5
+> 
+> sdata <- seq(1,10,2) # 1부터 5까지 2씩 건너 뛴 원소 저장
+> sdata
+[1] 1 3 5 7 9
+> 
+> rdata <- rep(1:2,2)
+> rdata
+[1] 1 2 1 2
+> 
+> first <- c("농구", "야구", "축구", "배드민턴")
+> second <-c("야구","자전거")
+> 
+> # 2 합집합
+> union(first, second)
+[1] "농구"     "야구"     "축구"     "배드민턴" "자전거"  
+> 
+> # 3 차집합 : first에 있고, second에 없는 것
+> setdiff(first, second)
+[1] "농구"     "축구"     "배드민턴"
+> 
+> # 4 교집합first와 second 공통으로 있는 것
+> intersect(first, second)
+[1] "야구"
+> 
+> # 5 세미콜론(;)을 구분
+> data; sdata; rdata; first; second
+[1] 1 2 3 4 5
+[1] 1 3 5 7 9
+[1] 1 2 1 2
+[1] "농구"     "야구"     "축구"     "배드민턴"
+[1] "야구"   "자전거"
+> 
+> 
+> 
+> # 행렬 자료구조
+> 
+> # 1 matrix 행렬
+> mdata <- matrix(c(1:6))
+> mdata
+     [,1]
+[1,]    1
+[2,]    2
+[3,]    3
+[4,]    4
+[5,]    5
+[6,]    6
+> 
+> # 2 열 기준으로 행렬
+> mrow <- matrix(c(1:8), nrow=2)
+> mrow
+     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8
+> 
+> # 3 행 기준으로 행렬
+> mbyrow <- matrix(c(1:8),nrow=2,byrow = T)
+> mbyrow
+     [,1] [,2] [,3] [,4]
+[1,]    1    2    3    4
+[2,]    5    6    7    8
+> 
+> # 4 다중 3 * 3 행렬
+> mrowcol <- matrix(c(1:9),nrow=3,ncol=3)
+> mrowcol
+     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9
+> length(mrowcol)
+[1] 9
+> 
+> # 5 행 길이
+> length(mrowcol)
+[1] 9
+> 
+> # 6 행렬 자료 처리 (1: 행 단위, 2: 열 단위)
+> # 행 단위로 각 행의 최대값
+> apply(mrowcol, 1, max)
+[1] 7 8 9
+> 
+> # 7 행 단위로 각 행의 최소값
+> apply(mrowcol, 2, min)
+[1] 1 4 7
+> 
+> # 8 열 단위로 각 열의 평균값
+> apply(mrowcol,2,mean)
+[1] 2 5 8
+> 
+> # 9 행렬 객체에 칼럼명 지정
+> colnames(mrowcol) <- c("one","two","three")
+> mrowcol
+     one two three
+[1,]   1   4     7
+[2,]   2   5     8
+[3,]   3   6     9
+> 
+> 
+> # 배열 
+> # 1 3행, 2열, 2면 배열 객체 생성
+> vec <- c(1:12)
+> 
+> arr <- array(vec, c(3,2,2))
+> 
+> arr
+, , 1
+
+     [,1] [,2]
+[1,]    1    4
+[2,]    2    5
+[3,]    3    6
+
+, , 2
+
+     [,1] [,2]
+[1,]    7   10
+[2,]    8   11
+[3,]    9   12
+
+> 
+> 
+> # 데이터프레임 자료구조
+> # 1 벡터를 이용한 데이트프레임 객체 생성
+> no <- c(1,2,3)
+> name <-c("별","해","달")
+> age <- c(13, 5, 8)
+> family <- data.frame(No = no, Name = name, Age = age)
+> family
+  No Name Age
+1  1   별  13
+2  2   해   5
+3  3   달   8
+> 
+> # 2 matrix를 이용한 데이터프레임 객체 생성
+> m <- matrix(c(1,"별", 13, 2, "해", 7, 3, "달",3),3, by=T)
+> family <- data.frame(m)
+> family
+  X1 X2 X3
+1  1 별 13
+2  2 해  7
+3  3 달  3
+> 
+> 
+> 
+> 
+> # 3 txt 파일 불러와서 데이터프레임 객체 생성
+> getwd()
+[1] "C:/rwork/rstudio-master/data"
+> 
+> setwd("C:/rwork/rstudio-master/data")
+> 
+> 
+> family <- read.table("001family.txt", header = 1, sep = "")
+> family
+  번호 이름 나이
+1    1 star   13
+2    2  sun    7
+3    3 moon    3
+> 
+> family1 <- read.table("C:/rwork/rstudio-master/data/001family.txt", header = 1, sep = "")
+> family1
+  번호 이름 나이
+1    1 star   13
+2    2  sun    7
+3    3 moon    3
+> 
+> 
+> # 4 데이터프레임 객체 생성
+> family2 <- data.frame(x = seq(1, 3, 1), y = c(5:7), z = c('star', 'sun', 'moon'))
+> family2
+  x y    z
+1 1 5 star
+2 2 6  sun
+3 3 7 moon
+> 
+> # 5 객체 컬럼명만 보기
+> family2$x
+[1] 1 2 3
+> 
+> family2$y
+[1] 5 6 7
+> 
+> family2$z
+[1] star sun  moon
+Levels: moon star sun
+> 
+> 
+> # 6 1열(x)과 2열(y)의 합계 
+> apply(family2[,c(1,2)], 2, sum)
+ x  y 
+ 6 18 
+> 
+>  
+> # 7 서브셋으로 부분 객체 만들기
+> # y → 6 이상
+> x1 <- subset(family2, y >= 6)
+> x1
+  x y    z
+2 2 6  sun
+3 3 7 moon
+> 
+> # 8 두 개 이상의 데이터프레임 병합
+> height <- data.frame(no = c(1,2), height = c(120, 130))
+> weight <- data.frame(no = c(1,2), weight = c(50, 60))
+> family <- merge(height, weight, by.x = "no", by.y = "no")
+> family
+  no height weight
+1  1    120     50
+2  2    130     60
+> 
+> # 9 자료형(mode)과 자료 구조(class) 확인
+> mode(family)
+[1] "list"
+> class(family)
+[1] "data.frame"
+> 
+> 
+> 
+> # 리스트 자료 구조
+> # 1 list 생성
+> list <- list("별", "해", "달")
+> list
+[[1]]
+[1] "별"
+
+[[2]]
+[1] "해"
+
+[[3]]
+[1] "달"
+
+> 
+> # 2 리스트를 벡터 구조로 변경
+> unlist <- unlist(list)
+> unlist
+[1] "별" "해" "달"
+>   
+> # 3 key와 value로 생성
+> family <- list(name = c("별","해", "달"), age = c(13, 7, 3),address = c("제주", "서울", "부산"), gender = c("남","여","여"), htype = c("아파트", "아파트","주택"))
+> family
+$name
+[1] "별" "해" "달"
+
+$age
+[1] 13  7  3
+
+$address
+[1] "제주" "서울" "부산"
+
+$gender
+[1] "남" "여" "여"
+
+$htype
+[1] "아파트" "아파트" "주택"  
+
+> 
+> # 4 name의 첫번째 값 출력
+> family$name[1]
+[1] "별"
+> 
+> # name의 첫번째 값 출력
+> family$name[2]
+[1] "해"
+> 
+> # 5 htype의 첫번째 값 출력
+> family$htype[3]
+[1] "주택"
+> 
+> # 6 htype의 두번째 값을 "office"로 변경
+> family$htype[2] <- "오피스"
+> family$htype
+[1] "아파트" "오피스" "주택"  
+> 
+> # 7 gender 원소 제거
+> family$gender <- NULL
+> family
+$name
+[1] "별" "해" "달"
+
+$age
+[1] 13  7  3
+
+$address
+[1] "제주" "서울" "부산"
+
+$htype
+[1] "아파트" "오피스" "주택"  
+
+> 
+> 
+> # 8 다차원 리스트 객체 생성
+> multi_family = list(c1 =list("별", "해", "달"),c2 = list("수성", "금성", "지구"),c3 = list("목성","토성","천왕성"))
+> multi_family
+$c1
+$c1[[1]]
+[1] "별"
+
+$c1[[2]]
+[1] "해"
+
+$c1[[3]]
+[1] "달"
+
+
+$c2
+$c2[[1]]
+[1] "수성"
+
+$c2[[2]]
+[1] "금성"
+
+$c2[[3]]
+[1] "지구"
+
+
+$c3
+$c3[[1]]
+[1] "목성"
+
+$c3[[2]]
+[1] "토성"
+
+$c3[[3]]
+[1] "천왕성"
+
+
+> 
+> 
+> # 9 다차원 리스트를 열 단위로 바인딩(cbind)
+> do.call(cbind, multi_family)
+     c1   c2     c3      
+[1,] "별" "수성" "목성"  
+[2,] "해" "금성" "토성"  
+[3,] "달" "지구" "천왕성"
